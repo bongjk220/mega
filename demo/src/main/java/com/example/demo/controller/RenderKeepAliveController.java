@@ -25,7 +25,7 @@ public class RenderKeepAliveController {
     private final AtomicInteger pingCount = new AtomicInteger(0);
 
     // [설정] 본인의 Render 서비스 URL + 엔드포인트
-    private final String MY_APP_URL = "https://megatestkr.onrender.com/health-check";
+    private final String MY_APP_URL = "https://계정아이디.onrender.com/health-check";
 
     /**
      * 1. 헬스 체크 엔드포인트
@@ -34,9 +34,10 @@ public class RenderKeepAliveController {
     @GetMapping("/health-check")
     public String healthCheck() {
         // 실제 사람이 접속하거나 서비스가 활성화되면 카운트를 초기화하여 상태 확인
-        pingCount.set(0); 
-        log.info("🏠 헬스 체크 접속: 카운터가 초기화되었습니다.");
-        return "OK - Counter Reset (Current: " + pingCount.get() + ")";
+        // pingCount.set(0); 
+        // log.info("🏠 헬스 체크 접속: 카운터가 초기화되었습니다.");
+        // return "OK - Counter Reset (Current: " + pingCount.get() + ")";
+        return "UP"
     }
 
     /**
