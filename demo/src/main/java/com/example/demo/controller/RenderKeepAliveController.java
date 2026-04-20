@@ -58,7 +58,7 @@ public class RenderKeepAliveController {
     public void scheduledKeepAlive() {
         LocalTime now = LocalTime.now();
         // Render의 무료 서버 리소스를 아끼기 위해 특정 활동 시간대(예: 09:30 ~ 18:00) 설정
-        LocalTime start = LocalTime.of(9, 30);
+        LocalTime start = LocalTime.of(9, 00);
         LocalTime end = LocalTime.of(18, 0);
 
         // 현재 시간이 설정한 범위 내에 있을 때만 핑을 보냄
