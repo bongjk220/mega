@@ -37,7 +37,7 @@ public class RenderKeepAliveController {
         // pingCount.set(0); 
         // log.info("🏠 헬스 체크 접속: 카운터가 초기화되었습니다.");
         // return "OK - Counter Reset (Current: " + pingCount.get() + ")";
-        return "UP"
+        return "UP";
     }
 
     /**
