@@ -20,18 +20,24 @@ res = requests.post(
     headers=headers # 이 부분이 핵심!
 )
 
-
 # res = requests.post(url, json={"orderType":"boxoffice","pageNo":1})
 data = res.json()
+
+print("-"*80)
+print(data.get("movieList", []))
+print("-"*80)
 
 movies = []
 for m in data.get("movieList", []): # movieList가 없으면 빈 리스트 반환
     movies.append({
-        # m["rnum"] 대신 m.get("rnum", 0)을 써서 키가 없어도 에러 안 나게 함
-        "rank": int(m.get("rnum", 0) or m.get("rank", 0)), 
-        "title": m.get("movieNm", "제목 없음"),
-        "openDate": m.get("openDt", ""),
-        "rating": m.get("watchGradeNm", "")
+        "boxoRank": int(m.get("boxoRank", 0)), # 랭킹
+        "movieNm": m.get("movieNm", "제목 없음"), #영화명
+        "rfilmDe": m.get("rfilmDe", ""), #상영일
+        "movieStatNm": m.get("movieStatNm", ""), #상영상태
+        "admisClassNm": m.get("admisClassNm", ""), #영화 연령분류
+        "imgPathNm": m.get("imgPathNm", ""), #이미지파일명
+        "movieSynopCn": m.get("movieSynopCn", ""), #영화 소개
+        "playTime": m.get("playTime", "") #상영시간
     })
 
 os.makedirs(os.path.dirname(PATH), exist_ok=True)

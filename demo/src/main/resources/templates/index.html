@@ -17,10 +17,14 @@
 <h1>🎬 영화 순위</h1>
 
 <div th:each="m : ${movies}" class="card">
-    <div>#<span th:text="${m.rank}"></span></div>
-    <h3 th:text="${m.title}"></h3>
-    <div th:text="${m.openDate}"></div>
-    <div th:text="${m.rating}"></div>
+    <div>#<span th:text="${m.boxoRank}"></span></div>
+    <h3 th:text="${m.movieNm}"></h3>
+    <div th:text="${m.rfilmDe}"></div>
+    <div th:text="${m.movieStatNm}"></div>
+    <div th:text="${m.admisClassNm}"></div>
+    <div th:text="${m.imgPathNm}"></div>
+    <div th:text="${m.movieSynopCn}"></div>
+    <div th:text="${m.playTime}"></div>
 </div>
 
 </body>
