@@ -15,7 +15,13 @@ public class MovieController {
     // 메인 페이지
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("movies", service.getAll());
+        try {
+            model.addAttribute("movies", service.getAll());
+        } catch (Exception e) {
+            // 데이터베이스 연결 실패 시 빈 리스트 전달
+            model.addAttribute("movies", java.util.Collections.emptyList());
+            System.err.println("Database connection failed: " + e.getMessage());
+        }
         return "index";
     }
 
