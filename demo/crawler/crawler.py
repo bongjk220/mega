@@ -38,6 +38,9 @@ def create_table_if_not_exists(conn):
     try:
         cursor = conn.cursor()
         
+        # 한국 시간대 설정
+        cursor.execute("SET time_zone = '+09:00'")
+        
         # 테이블 삭제 후 재생성 (항상 최신 데이터 유지)
         cursor.execute("DROP TABLE IF EXISTS movies")
         
@@ -65,6 +68,9 @@ def save_movies_to_tidb(conn, movies):
     """영화 데이터를 TiDB Cloud에 저장"""
     try:
         cursor = conn.cursor()
+        
+        # 한국 시간대 설정
+        cursor.execute("SET time_zone = '+09:00'")
         
         # 데이터 정제 (HTML 엔티티 제거)
         cleaned_movies = []
