@@ -88,6 +88,19 @@ APP_BASE_NAME=${0##*/}
 # Discard cd standard output in case $CDPATH is set (https://github.com/gradle/gradle/issues/25036)
 APP_HOME=$( cd -P "${APP_HOME:-./}" > /dev/null && printf '%s\n' "$PWD" ) || exit
 
+# Prefer UTF-8 in Git Bash/MSYS style terminals.
+case "${LANG:-}" in
+  *UTF-8*|*utf8*) ;;
+  *) LANG=C.UTF-8 ;;
+esac
+export LANG
+: "${LC_ALL:=$LANG}"
+export LC_ALL
+: "${PYTHONIOENCODING:=UTF-8}"
+export PYTHONIOENCODING
+: "${PYTHONUTF8:=1}"
+export PYTHONUTF8
+
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD=maximum
 
@@ -113,6 +126,13 @@ case "$( uname )" in                #(
   MSYS* | MINGW* )  msys=true    ;; #(
   NONSTOP* )        nonstop=true ;;
 esac
+
+DEFAULT_ENCODING_OPTS="-Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dconsole.encoding=UTF-8 -Duser.language=ko -Duser.country=KR"
+case " ${JAVA_TOOL_OPTIONS:-} " in
+  *" -Dfile.encoding="*) ;;
+  *) JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:+$JAVA_TOOL_OPTIONS }$DEFAULT_ENCODING_OPTS" ;;
+esac
+export JAVA_TOOL_OPTIONS
 
 CLASSPATH="\\\"\\\""
 

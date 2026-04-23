@@ -1,6 +1,6 @@
 package com.example.demo.scheduler;
 
-import com.example.demo.service.MovieService;
+import com.example.demo.service.CrawlerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,28 +11,16 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CrawlerScheduler {
 
-    private final MovieService movieService;
+    private final CrawlerService crawlerService;
 
-    // 매일 아침 8시에 실행 (한국 시간 기준)
     @Scheduled(cron = "0 30 9 * * *", zone = "Asia/Seoul")
     public void runDailyCrawler() {
-        log.info("=== 매일 아침 크롤러 실행 시작 ===");
+        log.info("=== \ub9e4\uc77c \uc544\uce68 \ud06c\ub864\ub7ec \uc2e4\ud589 \uc2dc\uc791 ===");
         try {
-            movieService.loadJson();
-            log.info("=== 크롤러 실행 성공 ===");
+            crawlerService.runCrawler();
+            log.info("=== \ud06c\ub864\ub7ec \uc2e4\ud589 \uc131\uacf5 ===");
         } catch (Exception e) {
-            log.error("=== 크롤러 실행 실패 ===", e);
+            log.error("=== \ud06c\ub864\ub7ec \uc2e4\ud589 \uc2e4\ud328 ===", e);
         }
     }
-
-    // 테스트용: 매분 실행 (개발 중에만 사용)
-    // @Scheduled(fixedRate = 60000)
-    // public void runTestCrawler() {
-    //     log.info("테스트 크롤러 실행");
-    //     try {
-    //         movieService.loadJson();
-    //     } catch (Exception e) {
-    //         log.error("테스트 크롤러 실패", e);
-    //     }
-    // }
 }
