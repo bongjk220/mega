@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@Slf4j
-@EnableScheduling
 @SpringBootApplication
+@EnableScheduling
+@Slf4j
 @RequiredArgsConstructor
 public class DemoApplication {
 
