@@ -19,12 +19,20 @@ public class MovieService {
 
     private final MovieRepository repo;
 
-    // JSON → DB
+    // JSON → DB (DB에 데이터가 없을 때만 실행)
     public void loadJson() throws Exception {
         System.out.println("=== MovieService.loadJson() 시작 ===");
         
         repo.createTable(); // 테이블 생성
 
+        // 1. DB에 데이터가 있는지 먼저 확인
+        List<Movie> existingMovies = repo.findAll();
+        if (!existingMovies.isEmpty()) {
+            System.out.println("DB에 이미 " + existingMovies.size() + "개의 영화 데이터가 있습니다. JSON 로드를 건너뜁니다.");
+            return;
+        }
+
+        System.out.println("DB가 비어있어 JSON 데이터를 로드합니다...");
         ObjectMapper mapper = new ObjectMapper();
 
         try {

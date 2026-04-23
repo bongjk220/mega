@@ -1,0 +1,52 @@
+[
+  {
+    "boxoRank": 1,
+    "movieNm": "파묘",
+    "rfilmDe": "2024.02.22",
+    "movieStatNm": "상영중",
+    "admisClassNm": "15세이상관람가",
+    "imgPathNm": "/SharedImg/2024/02/16/5YbL6x4lQX5hXO1k1v9h7j1v1i1g1l1o.jpg",
+    "movieSynopCn": "궤적을 따라 미얀마로 떠난 최고의 무당 김새범(최민식)과 아들 봉규(김고은). 그곳에서 기이한 소년 도영(이도현)을 만나 미지의 무덤으로 향하는데...",
+    "playTime": "134"
+  },
+  {
+    "boxoRank": 2,
+    "movieNm": "웡카",
+    "rfilmDe": "2024.01.31",
+    "movieStatNm": "상영중",
+    "admisClassNm": "전체관람가",
+    "imgPathNm": "/SharedImg/2024/01/24/3YbL6x4lQX5hXO1k1v9h7j1v1i1g1l1o.jpg",
+    "movieSynopCn": "초콜릿 마법사가 되려는 꿈을 가진 소년 웡카의 모험기. 세상에서 가장 달콤한 꿈을 찾아 떠나는 환상적인 여정이 시작된다.",
+    "playTime": "116"
+  },
+  {
+    "boxoRank": 3,
+    "movieNm": "시민덕희",
+    "rfilmDe": "2024.02.07",
+    "movieStatNm": "상영중",
+    "admisClassNm": "12세이상관람가",
+    "imgPathNm": "/SharedImg/2024/02/05/7YbL6x4lQX5hXO1k1v9h7j1v1i1g1l1o.jpg",
+    "movieSynopCn": "평범한 주부 덕희가 우연히 사기 피해를 입게 되면서, 자신의 권리를 되찾기 위해 벌이는 페미니스트 코미디.",
+    "playTime": "109"
+  },
+  {
+    "boxoRank": 4,
+    "movieNm": "드림",
+    "rfilmDe": "2024.02.21",
+    "movieStatNm": "상영중",
+    "admisClassNm": "12세이상관람가",
+    "imgPathNm": "/SharedImg/2024/02/19/9YbL6x4lQX5hXO1k1v9h7j1v1i1g1l1o.jpg",
+    "movieSynopCn": "지체장애인 축구선수들의 꿈과 열정을 그린 감동 스포츠 드라마. 불가능에 도전하는 청춘들의 이야기.",
+    "playTime": "134"
+  },
+  {
+    "boxoRank": 5,
+    "movieNm": "아가일라",
+    "rfilmDe": "2024.02.14",
+    "movieStatNm": "상영중",
+    "admisClassNm": "15세이상관람가",
+    "imgPathNm": "/SharedImg/2024/02/12/1YbL6x4lQX5hXO1k1v9h7j1v1i1g1l1o.jpg",
+    "movieSynopCn": "대한민국 최고의 요원 '아가일라'와 그의 팀이 국가 안보를 위한 임무를 수행하는 액션 스릴러.",
+    "playTime": "126"
+  }
+]
