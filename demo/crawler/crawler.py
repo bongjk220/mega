@@ -3,7 +3,7 @@ import requests
 import mysql.connector
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
@@ -74,6 +74,8 @@ def save_movies_to_tidb(conn, movies):
         
         # 데이터 정제 (HTML 엔티티 제거)
         cleaned_movies = []
+        korea_time = datetime.now() + timedelta(hours=9)  # 한국 시간 (UTC+9)
+        
         for movie in movies:
             cleaned_movie = {
                 'boxoRank': movie.get('boxoRank', 0),
@@ -83,14 +85,15 @@ def save_movies_to_tidb(conn, movies):
                 'admisClassNm': clean_html_entities(movie.get('admisClassNm', '')),
                 'imgPathNm': clean_html_entities(movie.get('imgPathNm', '')),
                 'movieSynopCn': clean_html_entities(movie.get('movieSynopCn', '')),
-                'playTime': clean_html_entities(movie.get('playTime', ''))
+                'playTime': clean_html_entities(movie.get('playTime', '')),
+                'created_at': korea_time.strftime('%Y-%m-%d %H:%M:%S')
             }
             cleaned_movies.append(cleaned_movie)
         
         # 데이터 삽입
         insert_sql = """
-        INSERT INTO movies (boxoRank, movieNm, rfilmDe, movieStatNm, admisClassNm, imgPathNm, movieSynopCn, playTime)
-        VALUES (%(boxoRank)s, %(movieNm)s, %(rfilmDe)s, %(movieStatNm)s, %(admisClassNm)s, %(imgPathNm)s, %(movieSynopCn)s, %(playTime)s)
+        INSERT INTO movies (boxoRank, movieNm, rfilmDe, movieStatNm, admisClassNm, imgPathNm, movieSynopCn, playTime, created_at)
+        VALUES (%(boxoRank)s, %(movieNm)s, %(rfilmDe)s, %(movieStatNm)s, %(admisClassNm)s, %(imgPathNm)s, %(movieSynopCn)s, %(playTime)s, %(created_at)s)
         """
         
         cursor.executemany(insert_sql, cleaned_movies)
