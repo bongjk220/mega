@@ -61,7 +61,7 @@ public class MovieService {
                 .admisClassNm("12세이상관람가")
                 .imgPathNm("/SharedImg/2026/04/22/Z7tourFOyU0a3xThKHzRJ3gYi24XHaGu.jpg")
                 .movieSynopCn("")
-                .playTime("120분")
+                .playTime("120")
                 .build(),
             Movie.builder()
                 .boxoRank(2)
@@ -71,7 +71,7 @@ public class MovieService {
                 .admisClassNm("15세이상관람가")
                 .imgPathNm("/SharedImg/2026/04/09/EQubwslxEDUXzW48Les6RlRvflw8eJc0.jpg")
                 .movieSynopCn("")
-                .playTime("135분")
+                .playTime("135")
                 .build()
         );
         
