@@ -171,7 +171,6 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            margin-bottom: 12px;
         }
         
         .meta-item {
@@ -189,49 +188,6 @@
         
         .release-date {
             color: #aaa;
-        }
-        
-        .movie-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .like-btn {
-            flex: 1;
-            padding: 8px;
-            background: transparent;
-            border: 1px solid #333;
-            border-radius: 6px;
-            color: #999;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-        
-        .like-btn:hover {
-            border-color: #e50914;
-            color: #e50914;
-        }
-        
-        .booking-btn {
-            flex: 2;
-            padding: 8px;
-            background: #e50914;
-            border: none;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .booking-btn:hover {
-            background: #ff0a16;
         }
         
         .no-movies {
@@ -263,87 +219,66 @@
     </style>
 </head>
 <body>
-                
-                .movie-poster {
-                    height: 220px;
-                }
-                
-                .tabs {
-                    gap: 20px;
-                    overflow-x: auto;
-                }
-                
-                .tab {
-                    white-space: nowrap;
-                }
-            }
-        </style>
-    </head>
-    <body>
 
-    <header class="header">
-        <div class="nav-container">
-            <div class="logo">MEGABOX</div>
-            
-            <nav class="tabs">
-                <a href="#" class="tab active">박스오피스</a>
-                <a href="#" class="tab">상영예정작</a>
-                <a href="#" class="tab">MEGA ONLY</a>
-                <a href="#" class="tab">특별관</a>
-            </nav>
-            
-            <div class="search-container">
-                <input type="text" class="search-input" placeholder="영화명 검색">
-                <span class="search-icon">🔍</span>
-            </div>
+<header class="header">
+    <div class="nav-container">
+        <div class="logo">MEGABOX</div>
+        
+        <nav class="tabs">
+            <a href="#" class="tab active">박스오피스</a>
+            <a href="#" class="tab">상영예정작</a>
+            <a href="#" class="tab">MEGA ONLY</a>
+            <a href="#" class="tab">특별관</a>
+        </nav>
+        
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="영화명 검색">
+            <span class="search-icon">🔍</span>
         </div>
-    </header>
+    </div>
+</header>
 
-    <main class="content">
-        <section>
-            <h2 class="section-title">전체영화</h2>
-            
-            <div class="movie-grid" th:if="${not #lists.isEmpty(movies)}">
-                <div th:each="m : ${movies}" class="movie-card">
-                    <div class="movie-poster">
-                        <img th:if="${m.imgPathNm}" th:src="${m.imgPathNm}" th:alt="${m.movieNm}" onerror="this.style.display='none'; this.parentElement.innerHTML='이미지 없음'">
-                        <span th:unless="${m.imgPathNm}">이미지 없음</span>
-                    </div>
+<main class="content">
+    <section>
+        <h2 class="section-title">전체영화</h2>
+        
+        <div class="movie-grid" th:if="${not #lists.isEmpty(movies)}">
+            <div th:each="m : ${movies}" class="movie-card">
+                <div class="movie-poster">
+                    <img th:if="${m.imgPathNm != null and !#strings.isEmpty(m.imgPathNm)}" th:src="${#strings.startsWith(m.imgPathNm, 'http') ? m.imgPathNm : 'https://www.megabox.co.kr' + m.imgPathNm}" th:alt="${m.movieNm}" onerror="this.style.display='none'; this.parentElement.innerHTML='이미지 로딩 실패'">
+                    <span th:unless="${m.imgPathNm != null and !#strings.isEmpty(m.imgPathNm)}">이미지 로딩 실패</span>
+                </div>
+                
+                <div class="movie-info">
+                    <h3 class="movie-title" th:text="${m.movieNm}">영화 제목</h3>
                     
-                    <div class="movie-info">
-                        <h3 class="movie-title" th:text="${m.movieNm}">영화 제목</h3>
-                        
-                        <div class="movie-meta">
-                            <div class="meta-item">
-                                <span>예매율</span>
-                                <span class="booking-rate" th:text="${m.boxoRank} + '위'">1위</span>
-                            </div>
-                            <div class="meta-item">
-                                <span>개봉일</span>
-                                <span class="release-date" th:text="${m.rfilmDe}">2024.04.23</span>
-                            </div>
-                            <div class="meta-item">
-                                <span th:text="${m.admisClassNm}">12세</span>
-                                <span th:text="${m.playTime}">120분</span>
-                            </div>
+                    <div class="movie-meta">
+                        <div class="meta-item">
+                            <span>랭킹</span>
+                            <span class="booking-rate" th:text="${m.boxoRank} + '위'">1위</span>
                         </div>
-                        
-                        <div class="movie-actions">
-                            <button class="like-btn">
-                                <span>♡</span>
-                                <span>좋아요</span>
-                            </button>
-                            <button class="booking-btn">예매</button>
+                        <div class="meta-item">
+                            <span>개봉일</span>
+                            <span class="release-date" th:text="${m.rfilmDe}">2024.04.23</span>
+                        </div>
+                        <div class="meta-item">
+                            <span th:text="${m.admisClassNm}">12세</span>
+                            <span th:text="${m.movieStatNm}">미개봉</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>상영시간</span>
+                            <span th:text="${m.playTime} + '분'"></span>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div th:if="${#lists.isEmpty(movies)}" class="no-movies">
-                현재 상영중인 영화가 없습니다.
-            </div>
-        </section>
-    </main>
+        </div>
+        
+        <div th:if="${#lists.isEmpty(movies)}" class="no-movies">
+            현재 상영중인 영화가 없습니다.
+        </div>
+    </section>
+</main>
 
-    </body>
-    </html>
+</body>
+</html>
