@@ -2,6 +2,8 @@ package com.semi.domain.member;
 
 import com.semi.domain.member.dto.MemberResponse;
 import com.semi.domain.member.dto.RegisterRequest;
+import com.semi.domain.order.PurchaseOrder;
+import com.semi.domain.order.PurchaseOrderRepository;
 import com.semi.exception.DuplicateMemberException;
 import com.semi.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PurchaseOrderRepository purchaseOrderRepository;
 
     /**
      * 회원가입
@@ -75,5 +78,45 @@ public class MemberService {
         return memberRepository.findAll().stream()
                 .map(MemberResponse::from)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 임시 비밀번호 변경 (개발 환경용)
+     * admin 계정의 비밀번호를 'admin123'으로 변경
+     */
+    @Transactional
+    public void resetAdminPassword() {
+        Member admin = memberRepository.findByMemberId("admin")
+                .orElseThrow(() -> new MemberNotFoundException("admin 계정을 찾을 수 없습니다."));
+        
+        String newPassword = "admin123";
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        
+        admin.updatePassword(encodedPassword);
+        memberRepository.save(admin);
+        
+        log.info("[ADMIN] admin 비밀번호가 '{}'으로 변경되었습니다.", newPassword);
+    }
+
+    /**
+     * 회원 삭제 (주문 내역 포함)
+     */
+    @Transactional
+    public void deleteMember(Long memberId, String deletedBy) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("회원을 찾을 수 없습니다."));
+
+        if (member.getRole() == MemberRole.ADMIN) {
+            throw new IllegalStateException("관리자 계정은 삭제할 수 없습니다.");
+        }
+
+        // 연관된 주문 내역 모두 삭제 (cascade 로 인해 아이템도 삭제됨)
+        List<PurchaseOrder> orders = purchaseOrderRepository.findByMemberIdOrderByOrderedAtDesc(memberId);
+        purchaseOrderRepository.deleteAll(orders);
+
+        // 회원 삭제
+        memberRepository.delete(member);
+
+        log.info("[AUDIT] member_deleted | target={} | deletedBy={}", member.getMemberId(), deletedBy);
     }
 }

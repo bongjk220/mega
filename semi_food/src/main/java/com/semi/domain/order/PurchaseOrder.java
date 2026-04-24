@@ -72,13 +72,18 @@ public class PurchaseOrder {
 
     @Builder
     public PurchaseOrder(String orderNumber, Member member, Supplier supplier,
-                         Integer totalPrice, Integer shippingFee, Boolean isAuto) {
+                         Integer totalPrice, Integer shippingFee, Boolean isAuto,
+                         Integer subtotal, String shippingAddress, String paymentMethod, String paymentStatus) {
         this.orderNumber  = orderNumber;
         this.member       = member;
         this.supplier     = supplier;
         this.totalPrice   = totalPrice;
         this.shippingFee  = shippingFee;
         this.isAuto       = isAuto != null ? isAuto : false;
+        this.subtotal     = subtotal != null ? subtotal : totalPrice; // fallback if null
+        this.shippingAddress = shippingAddress;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
         this.status       = OrderStatus.RECEIVED;  // 기본값: 발주 접수 완
         this.orderedAt    = LocalDateTime.now();
     }

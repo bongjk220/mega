@@ -4,6 +4,13 @@ spring:
     # The .env file is ignored by Git; keep real values out of source control.
     import: optional:file:.env[.properties]
 
+  # Fix Korean character encoding issues
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
   datasource:
     # TiDB Cloud / MySQL-compatible connection values come from environment config.
     url: ${TIDB_URL}
@@ -24,7 +31,7 @@ spring:
   flyway:
     # Flyway is executed by FlywayConfig so startup order stays explicit.
     enabled: false
-    clean-disabled: false
+    clean-disabled: true
 
 cors:
   # Local browser dev defaults only. Production must override with real origins.
@@ -32,6 +39,23 @@ cors:
 
 server:
   port: ${SERVER_PORT:8080}
+  # Fix character encoding for requests and responses
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+
+# Jackson configuration for JSON serialization
+jackson:
+  default-property-inclusion: NON_NULL
+  serialization:
+    write-dates-as-timestamps: false
+    fail-on-empty-beans: false
+  deserialization:
+    fail-on-unknown-properties: false
 
 logging:
   level:

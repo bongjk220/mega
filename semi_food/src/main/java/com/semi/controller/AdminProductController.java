@@ -23,8 +23,21 @@ public class AdminProductController {
     @GetMapping("/list")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productRepository.findAll();
+        // 최적화된 쿼리 사용 - N+1 문제 해결 및 데이터베이스 레벨 정렬
+        List<Product> products = productRepository.findAllOptimized();
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/list/paged")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<Product>> getProductsPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        // 페이징 처리 - 한 번에 50개씩 로드
+        org.springframework.data.domain.Pageable pageable = 
+            org.springframework.data.domain.PageRequest.of(page, size);
+        org.springframework.data.domain.Page<Product> productPage = productRepository.findProductsPaged(pageable);
+        return ResponseEntity.ok(productPage.getContent());
     }
 
     @GetMapping("/{id}")

@@ -10,8 +10,9 @@ import org.springframework.ui.Model;
 public class AdminPageController {
 
     @GetMapping
-    public String adminPage() {
-        return "dadream-admin";
+    public String adminPage(Model model) {
+        // 항상 대시보드 페이지로 리다이렉트
+        return "admin-dashboard";
     }
 
     @GetMapping("/dashboard")

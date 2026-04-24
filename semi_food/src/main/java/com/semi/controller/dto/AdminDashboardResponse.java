@@ -11,8 +11,15 @@ public record AdminDashboardResponse(
     List<KeywordItem> keywords,
     List<OrderItem> recentOrders,
     List<ProductItem> recentProducts,
-    List<MemberItem> recentMembers
+    List<MemberItem> recentMembers,
+    List<RpaExtractionItem> rpaExtractionData
 ) {
+    public record RpaExtractionItem(
+        String hour,
+        int extractionCount,
+        int successCount,
+        int failureCount
+    ) {}
     public record KeywordItem(
         Long id,
         int rank,

@@ -48,8 +48,7 @@ public class AdminMemberController {
             @PathVariable Long id,
             @AuthenticationPrincipal MemberDetails deletedBy
     ) {
-        // TODO: Implement member deletion logic
-        // Need to check if member can be deleted (not admin, no active orders, etc.)
+        memberService.deleteMember(id, deletedBy.getMember().getMemberId());
         return ResponseEntity.ok().build();
     }
 }
