@@ -33,7 +33,7 @@ public class RenderKeepAliveController {
     public void scheduledKeepAlive() {
         LocalTime now = LocalTime.now();
         LocalTime start = LocalTime.of(8, 0);
-        LocalTime end = LocalTime.of(18, 0);
+        LocalTime end = LocalTime.of(23, 0);
 
         if (now.isAfter(start) && now.isBefore(end)) {
             sendPing("Auto");
