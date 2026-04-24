@@ -13,7 +13,7 @@ public class CrawlerScheduler {
 
     private final CrawlerService crawlerService;
 
-    @Scheduled(cron = "0 30 9 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 9 * * *", zone = "Asia/Seoul")
     public void runDailyCrawler() {
         log.info("=== \ub9e4\uc77c \uc544\uce68 \ud06c\ub864\ub7ec \uc2e4\ud589 \uc2dc\uc791 ===");
         try {

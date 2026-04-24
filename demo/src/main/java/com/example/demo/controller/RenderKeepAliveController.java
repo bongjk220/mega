@@ -32,7 +32,7 @@ public class RenderKeepAliveController {
     @Scheduled(fixedRate = 720000)
     public void scheduledKeepAlive() {
         LocalTime now = LocalTime.now();
-        LocalTime start = LocalTime.of(9, 0);
+        LocalTime start = LocalTime.of(8, 0);
         LocalTime end = LocalTime.of(18, 0);
 
         if (now.isAfter(start) && now.isBefore(end)) {
