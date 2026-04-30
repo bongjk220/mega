@@ -1,7 +1,6 @@
 # 1단계: 빌드
 FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
-
 COPY . .
 
 # gradlew 대신 시스템 설치된 gradle 명령어로 빌드 (Wrapper 파일 필요 없음)
