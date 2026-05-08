@@ -73,6 +73,6 @@ logging:
     org.flywaydb: ${FLYWAY_LOG_LEVEL:INFO}
 
 jwt:
-  secret: ${JWT_SECRET}
+  secret: ${JWT_SECRET:REQUIRED}  # 임시로 확인용, 실제로는 .env 파일에서 설정해야 함
   expiry-seconds: ${JWT_EXPIRY_SECONDS:7200}
   
