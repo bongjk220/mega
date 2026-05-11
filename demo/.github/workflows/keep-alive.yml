@@ -1,0 +1,16 @@
+name: Keep Render App Alive
+
+on:
+  schedule:
+    # 매 13분마다 실행 (한국 시간으로 자동 변환됨)
+    - cron: '*/13 * * * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Keep Render app awake
+        run: |
+          curl -f https://megatestkr.onrender.com/ || true
+        continue-on-error: true
