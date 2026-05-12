@@ -9,10 +9,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 # TiDB Cloud 연결 정보(GitHub Actions > Settings → Secrets and variables → Actions)
-TIDB_HOST = os.environ.get("TIDB_HOST")
+TIDB_HOST = os.environ.get("DB_HOST")
 TIDB_PORT = 4000
-TIDB_USER = os.environ.get("TIDB_USERNAME")
-TIDB_PASSWORD = os.environ.get("TIDB_PASSWORD")
+TIDB_USER = os.environ.get("DB_USER")
+TIDB_PASSWORD = os.environ.get("DB_PASS")
 TIDB_DATABASE = "mydb"
 
 def connect_tidb():
