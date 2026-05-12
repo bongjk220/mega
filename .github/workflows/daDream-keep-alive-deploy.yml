@@ -1,0 +1,27 @@
+name: daDream Render App Alive & Deploy Trigger
+
+on:
+  schedule:
+    # 매 14분마다 실행 (한국 시간으로 자동 변환됨)
+    - cron: '*/14 * * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'shop/**'   # shop 폴더 변경시에만 deploy 트리거
+
+jobs:
+  # Render 앱을 깨우는 작업
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Keep daDream Render app awake
+        run: |
+          curl -f https://dadream.onrender.com/ || true
+        continue-on-error: true
+  # shop 폴더 변경 시 Render 앱 배포 트리거
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'   # push 이벤트일 때만 실행
+    steps:
+      - name: Trigger daDream Render Deploy
+        run: curl "${{ secrets.DADREAM_DEPLOY_HOOK }}"
