@@ -2,8 +2,7 @@ name: Keep Render App Alive
 
 on:
   schedule:
-    # 매 13분마다 실행 (한국 시간으로 자동 변환됨)
-    - cron: '*/13 * * * *'
+    - cron: '0 23 * * *'  # UTC 23:00 = KST 08:00
   workflow_dispatch:
 
 jobs:
