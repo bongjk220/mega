@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
@@ -23,16 +24,11 @@ public class RenderKeepAliveController {
         return "UP";
     }
 
-    @GetMapping("/manual-ping")
-    public String manualPing() {
-        sendPing("Manual");
-        return "Manual Ping Sent!";
-    }
-
     @Scheduled(fixedRate = 720000)
     public void scheduledKeepAlive() {
-        LocalTime now = LocalTime.now();
-        LocalTime start = LocalTime.of(8, 0);
+        // LocalTime now = LocalTime.now(); // 서버 시간 = UTC
+        LocalTime now = LocalTime.now(ZoneId.of("Asia/Seoul")); // KST 기준 시간으로 변경
+        LocalTime start = LocalTime.of(8, 0);  // 8시가 UTC 8시로 인식됨
         LocalTime end = LocalTime.of(23, 0);
 
         if (now.isAfter(start) && now.isBefore(end)) {
