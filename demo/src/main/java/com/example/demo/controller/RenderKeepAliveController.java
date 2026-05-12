@@ -24,7 +24,7 @@ public class RenderKeepAliveController {
         return "UP";
     }
 
-    @Scheduled(fixedRate = 720000)
+    @Scheduled(fixedRate = 840000) // 14분마다 실행 (840,000ms = 14분)
     public void scheduledKeepAlive() {
         // LocalTime now = LocalTime.now(); // 서버 시간 = UTC
         LocalTime now = LocalTime.now(ZoneId.of("Asia/Seoul")); // KST 기준 시간으로 변경
