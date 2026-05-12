@@ -8,11 +8,11 @@ from datetime import datetime, timedelta
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
-# TiDB Cloud 연결 정보
-TIDB_HOST = "gateway01.ap-northeast-1.prod.aws.tidbcloud.com"
+# TiDB Cloud 연결 정보(GitHub Actions > Settings → Secrets and variables → Actions)
+TIDB_HOST = os.environ.get("TIDB_HOST")
 TIDB_PORT = 4000
-TIDB_USER = "PrkazshsERPiVWq.root"
-TIDB_PASSWORD = "iQcYuElTAhN3wGD5"
+TIDB_USER = os.environ.get("TIDB_USERNAME")
+TIDB_PASSWORD = os.environ.get("TIDB_PASSWORD")
 TIDB_DATABASE = "mydb"
 
 def connect_tidb():
