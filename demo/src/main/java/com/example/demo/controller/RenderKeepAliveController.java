@@ -29,7 +29,7 @@ public class RenderKeepAliveController {
         // LocalTime now = LocalTime.now(); // 서버 시간 = UTC
         LocalTime now = LocalTime.now(ZoneId.of("Asia/Seoul")); // KST 기준 시간으로 변경
         LocalTime start = LocalTime.of(8, 0);  // 8시가 UTC 8시로 인식됨
-        LocalTime end = LocalTime.of(23, 0);
+        LocalTime end = LocalTime.of(19, 0);
 
         if (now.isAfter(start) && now.isBefore(end)) {
             sendPing("Auto");

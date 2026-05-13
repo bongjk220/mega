@@ -70,6 +70,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 // 정적 파일 허용 (루트 + 하위 디렉토리 HTML 모두 포함)
                 .requestMatchers("/index.html", "/*.html", "/**/*.html", "/css/**", "/js/**","/images/**").permitAll()
+                // 헬스체크 엔드포인트는 인증 없이 허용
+                .requestMatchers("/health-check").permitAll()
                 //[ ]TODO 배포시 주석처리 할 것, 모든 페이지 허용
                 .anyRequest().permitAll()
                 // .anyRequest().authenticated()
