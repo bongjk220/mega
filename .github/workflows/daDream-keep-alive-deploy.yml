@@ -1,9 +1,9 @@
-name: daDream Render App Alive & Deploy Trigger
+name: daDream Keep Render App Alive & Deploy Trigger
 
 on:
   schedule:
-    # 매 14분마다 실행 (한국 시간으로 자동 변환됨)
-    - cron: '0 23 * * *'  # UTC 23:00 = KST 08:00 매일 1회
+    # 매일 8시마다 실행
+    - cron: '0 23 * * *'  # UTC 23:00 = KST 08:00
   workflow_dispatch:
   push:
     paths:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name != 'push'  # push 일 때는 실행 안 함
     steps:
-      - name: Keep daDream Render app awake
+      - name: Keep Render app awake
         run: |
           curl -f https://dadream.onrender.com/ || true
         continue-on-error: true
