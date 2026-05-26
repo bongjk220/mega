@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White Day Lovely Confession 💖</title>
+    <!-- Google Fonts: 감성적인 손글씨 서체 연동 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Nanum+Pen+Script&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 50%, #f9bec7 100%);
+            --heart-pink: #ff758f;
+            --heart-shadow: rgba(255, 117, 143, 0.4);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --pastel-blue: #a2d2ff;
+            --pastel-yellow: #fefae0;
+            --pastel-pink: #ffafcc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Gamja Flower', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 배경 하트 파티클 캔버스 */
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 메인 카드 컨테이너 */
+        .card-container {
+            position: relative;
+            width: 90%;
+            max-width: 440px;
+            height: 85vh;
+            max-height: 760px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(255, 75, 110, 0.15), 
+                        inset 0 0 20px rgba(255, 255, 255, 0.6);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            transform: translateY(0);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-container:hover {
+            box-shadow: 0 25px 70px rgba(255, 75, 110, 0.25), 
+                        inset 0 0 25px rgba(255, 255, 255, 0.8);
+        }
+
+        /* 파스텔톤 도트 테두리 장식 */
+        .border-deco {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 5;
+            border: 16px solid transparent;
+            /* 테두리 도트 쉐이프 구현 */
+            border-image: radial-gradient(circle, var(--pastel-pink) 30%, var(--pastel-blue) 60%, var(--pastel-yellow) 90%) 20 round;
+            opacity: 0.85;
+            border-radius: 40px;
+        }
+
+        /* 귀여운 테두리 물방울 패턴 요소들 */
+        .dots-wrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .dot-deco {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            opacity: 0.8;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+
+        /* 상단 데코레이션 */
+        .top-deco {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        .balloon-hearts {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .balloon-hearts span {
+            font-size: 1.8rem;
+            display: inline-block;
+            animation: float 4s ease-in-out infinite alternate;
+        }
+        
+        .balloon-hearts span:nth-child(2) {
+            animation-delay: 0.5s;
+            font-size: 2.2rem;
+            transform: translateY(-5px);
+        }
+        .balloon-hearts span:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(-5deg); }
+            100% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* 하트 그리드 */
+        .hearts-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 25px 20px;
+            justify-items: center;
+            align-content: center;
+            margin: auto 0;
+            z-index: 3;
+        }
+
+        /* 개별 하트 아이템 (3D Flip 적용) */
+        .heart-item-wrap {
+            perspective: 800px;
+            width: 140px;
+            height: 120px;
+            cursor: pointer;
+        }
+
+        .heart-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .heart-item-wrap:hover .heart-card {
+            transform: scale(1.08) rotateY(15deg);
+        }
+
+        .heart-item-wrap.flipped .heart-card {
+            transform: rotateY(180deg);
+        }
+
+        /* 하트 앞면과 뒷면 공통 */
+        .heart-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        /* 앞면: 펠트 감성의 핑크 하트 스티커 */
+        .heart-front {
+            background-color: transparent;
+        }
+
+        .felt-heart {
+            position: relative;
+            width: 110px;
+            height: 100px;
+            background: #ff85a1;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(-45deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px var(--heart-shadow),
+                        inset 0 4px 6px rgba(255, 255, 255, 0.3);
+            border: 2px dashed rgba(255, 255, 255, 0.5); /* 펠트 바느질 느낌 */
+            transition: background 0.3s;
+        }
+
+        .felt-heart::before {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #ff85a1;
+            border-radius: 50%;
+            top: 0;
+            left: 50px;
+        }
+
+        .felt-heart::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #ff85a1;
+            border-radius: 50%;
+            top: -50px;
+            left: 0;
+        }
+
+        .heart-text {
+            position: absolute;
+            transform: rotate(45deg); /* 하트 회전 보정 */
+            color: #4a1c28;
+            font-size: 1.55rem;
+            font-weight: bold;
+            z-index: 10;
+            text-align: center;
+            width: 100px;
+            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+            line-height: 1.1;
+        }
+
+        /* 뒷면: 뒤집혔을 때 보여줄 미니 카드 */
+        .heart-back {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: 2px solid #ffb3c6;
+            transform: rotateY(180deg);
+            box-shadow: 0 8px 15px rgba(255, 75, 110, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .confession-message {
+            font-size: 1.1rem;
+            color: #ff4d6d;
+            font-weight: bold;
+            padding: 8px;
+            word-break: keep-all;
+            line-height: 1.3;
+        }
+
+        /* 하단 오르골 뮤직 플레이어 및 하단 선 */
+        .bottom-area {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            z-index: 3;
+        }
+
+        .divider {
+            width: 70%;
+            height: 10px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'%3E%3Cpath d='M0,5 Q25,0 50,5 T100,5' fill='none' stroke='%23ffb3c6' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-size: cover;
+            opacity: 0.7;
+        }
+
+        /* 뮤직 토글 버튼 */
+        .music-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #ff85a1;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: #ff5c8a;
+            font-family: 'Gamja Flower', cursive;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 117, 143, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .music-btn:hover {
+            transform: scale(1.05);
+            background: #ff85a1;
+            color: white;
+        }
+
+        .music-btn.playing {
+            background: #ff5c8a;
+            color: white;
+            border-color: #ff5c8a;
+            box-shadow: 0 0 15px rgba(255, 92, 138, 0.5);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* 감동 모달 창 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 194, 209, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 30px;
+            max-width: 380px;
+            width: 85%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(255, 75, 110, 0.3);
+            border: 3px solid #ffafcc;
+            transform: scale(0.7);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            40% { transform: scale(1.05); }
+            60% { transform: scale(1.15); }
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            color: #ff4d6d;
+            margin-bottom: 15px;
+        }
+
+        .modal-desc {
+            font-size: 1.35rem;
+            color: #4a1c28;
+            line-height: 1.5;
+            word-break: keep-all;
+            margin-bottom: 25px;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #ff85a1, #ff4d6d);
+            border: none;
+            color: white;
+            font-family: 'Gamja Flower', cursive;
+            padding: 10px 35px;
+            font-size: 1.25rem;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 75, 110, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* 폰트 및 세부 모바일 대응 */
+        @media (max-height: 700px) {
+            .card-container {
+                height: 90vh;
+                padding: 25px 20px;
+            }
+            .hearts-grid {
+                grid-gap: 15px 12px;
+            }
+            .heart-item-wrap {
+                width: 120px;
+                height: 105px;
+            }
+            .felt-heart {
+                width: 95px;
+                height: 85px;
+            }
+            .felt-heart::before {
+                width: 85px;
+                height: 85px;
+                left: 42px;
+            }
+            .felt-heart::after {
+                width: 85px;
+                height: 85px;
+                top: -42px;
+            }
+            .heart-text {
+                font-size: 1.35rem;
+                width: 85px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 캔버스 (하트 뿜뿜/배경 파티클 효과) -->
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="card-container">
+        <!-- 파스텔톤 도트 테두리 장식 -->
+        <div class="border-deco"></div>
+        <div class="dots-wrapper" id="dotsWrapper"></div>
+
+        <!-- 상단 데코레이션 (귀여운 풍선 하트들) -->
+        <div class="top-deco">
+            <div class="balloon-hearts">
+                <span>🎈</span>
+                <span>💖</span>
+                <span>🎈</span>
+            </div>
+            <div style="font-size: 1.6rem; color: #ff5c8a; font-weight: bold; letter-spacing: 2px;">
+                SWEET CONFESSION
+            </div>
+        </div>
+
+        <!-- 하트 카드 그리드 (6개) -->
+        <div class="hearts-grid">
+            
+            <!-- 하트 1: 로또 -->
+            <div class="heart-item-wrap" onclick="flipHeart(this, 1)">
+                <div class="heart-card">
+                    <div class="heart-face heart-front">
+                        <div class="felt-heart">
+                            <span class="heart-text">로또</span>
+                        </div>
+                    </div>
+                    <div class="heart-face heart-back">
+                        <span class="confession-message" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;">
+                            🔮<br>인생역전 기회!<br>
+                            <a href="./lotto/index.html" style="text-decoration: none; background: #ff4d6d; color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; box-shadow: 0 3px 8px rgba(255, 75, 110, 0.4); pointer-events: auto; z-index: 50;" onclick="event.stopPropagation();">생성기 바로가기 ➔</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하트 2 -->
+            <div class="heart-item-wrap" onclick="flipHeart(this, 2)">
+                <div class="heart-card">
+                    <div class="heart-face heart-front">
+                        <div class="felt-heart">
+                            <span class="heart-text">러블리 고백</span>
+                        </div>
+                    </div>
+                    <div class="heart-face heart-back">
+                        <span class="confession-message">🌸<br>처음 만난 그날부터<br>내 마음은 너뿐이야</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하트 3 -->
+            <div class="heart-item-wrap" onclick="flipHeart(this, 3)">
+                <div class="heart-card">
+                    <div class="heart-face heart-front">
+                        <div class="felt-heart">
+                            <span class="heart-text">나의 사랑 모두</span>
+                        </div>
+                    </div>
+                    <div class="heart-face heart-back">
+                        <span class="confession-message">💕<br>셀 수 없을 만큼 큰<br>사랑을 담았어</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하트 4 -->
+            <div class="heart-item-wrap" onclick="flipHeart(this, 4)">
+                <div class="heart-card">
+                    <div class="heart-face heart-front">
+                        <div class="felt-heart">
+                            <span class="heart-text">너에게 줄께!</span>
+                        </div>
+                    </div>
+                    <div class="heart-face heart-back">
+                        <span class="confession-message">🎁<br>세상에서 가장 예쁜<br>행복을 선물할게</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하트 5: 빈 글씨 -->
+            <div class="heart-item-wrap" onclick="flipHeart(this, 5)">
+                <div class="heart-card">
+                    <div class="heart-face heart-front">
+                        <div class="felt-heart">
+                            <span class="heart-text">&nbsp;</span>
+                        </div>
+                    </div>
+                    <div class="heart-face heart-back">
+                        <span class="confession-message">⏰<br>아무 글씨 없어도<br>너를 사랑하는 마음뿐</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하트 6 -->
+            <div class="heart-item-wrap" onclick="flipHeart(this, 6)">
+                <div class="heart-card">
+                    <div class="heart-face heart-front">
+                        <div class="felt-heart">
+                            <span class="heart-text">I LOVE YOU</span>
+                        </div>
+                    </div>
+                    <div class="heart-face heart-back">
+                        <span class="confession-message">💘<br>하늘만큼 땅만큼<br>너를 아주 많이 사랑해</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 하단 오르골 컨트롤러 영역 -->
+        <div class="bottom-area">
+            <div class="divider"></div>
+            <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+                <span id="musicIcon">🎵</span> <span id="musicText">오르골 멜로디 켜기</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 최종 고백 편지 팝업 모달 -->
+    <div class="modal-overlay" id="finalModal">
+        <div class="modal-content">
+            <div class="modal-icon">💝</div>
+            <h3 class="modal-title">To. My Precious Love</h3>
+            <p class="modal-desc" id="modalText">
+                메시지가 로드 중입니다...
+            </p>
+            <button class="close-btn" onclick="closeModal()">고마워요 💖</button>
+        </div>
+    </div>
+
+    <!-- 로직 자바스크립트 -->
+    <script>
+        // 1. 파스텔 닷 장식 동적 생성
+        const dotsWrapper = document.getElementById('dotsWrapper');
+        const colors = ['#a2d2ff', '#fefae0', '#ffafcc', '#ffc2d1', '#bde0fe'];
+        const cardWidth = 440;
+        
+        // 카드의 둘레를 따라 부드러운 파스텔 물방울(도트) 스티커를 예쁘게 배치
+        function createDotDeco() {
+            // 좌측 테두리
+            for(let i=0; i<10; i++) {
+                createDot(2, 5 + i * 9.5, colors[i % colors.length]);
+            }
+            // 우측 테두리
+            for(let i=0; i<10; i++) {
+                createDot(93, 5 + i * 9.5, colors[(i + 2) % colors.length]);
+            }
+            // 상단 테두리
+            for(let i=0; i<6; i++) {
+                createDot(10 + i * 16, 2, colors[(i + 1) % colors.length]);
+            }
+            // 하단 테두리
+            for(let i=0; i<6; i++) {
+                createDot(10 + i * 16, 95, colors[(i + 3) % colors.length]);
+            }
+        }
+
+        function createDot(leftPercent, topPercent, color) {
+            const dot = document.createElement('div');
+            dot.className = 'dot-deco';
+            dot.style.left = `${leftPercent}%`;
+            dot.style.top = `${topPercent}%`;
+            dot.style.backgroundColor = color;
+            // 미세하게 다 다른 크기로 유기적인 느낌 연출
+            const size = 16 + Math.random() * 10;
+            dot.style.width = `${size}px`;
+            dot.style.height = `${size}px`;
+            dotsWrapper.appendChild(dot);
+        }
+        createDotDeco();
+
+        // 2. 파티클 시스템 (배경 하트 & 클릭 시 폭죽 효과)
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y, isExplosion = false, text = '💖') {
+                this.x = x;
+                this.y = y;
+                this.isExplosion = isExplosion;
+                this.char = text;
+                
+                if (isExplosion) {
+                    // 클릭 폭사 효과 파티클
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 2 + Math.random() * 6;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                    this.size = 14 + Math.random() * 16;
+                    this.alpha = 1;
+                    this.decay = 0.015 + Math.random() * 0.02;
+                    this.gravity = 0.05;
+                } else {
+                    // 배경에 잔잔히 떠오르는 파티클
+                    this.vx = (Math.random() - 0.5) * 0.6;
+                    this.vy = -0.5 - Math.random() * 1.2;
+                    this.size = 10 + Math.random() * 20;
+                    this.alpha = 0.1 + Math.random() * 0.4;
+                    this.decay = 0.001;
+                    this.gravity = 0;
+                }
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.isExplosion) {
+                    this.vy += this.gravity; // 터지는 파티클에 살짝 중력 부여
+                    this.alpha -= this.decay;
+                } else {
+                    // 화면 밖으로 나가면 서서히 투명
+                    if (this.y < 0) this.alpha = 0;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.alpha);
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.char, this.x, this.y);
+                ctx.restore();
+            }
+        }
+
+        // 잔잔한 배경 하트 주기적 생성
+        setInterval(() => {
+            if (particles.length < 100) {
+                particles.push(new Particle(Math.random() * canvas.width, canvas.height + 20, false, ['💖', '💕', '🍬', '🍭', '🎈'][Math.floor(Math.random() * 5)]));
+            }
+        }, 300);
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                if (p.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // 클릭했을 때 사방으로 터지는 하트 폭죽 효과
+        function explodeHearts(x, y) {
+            const icons = ['💖', '💕', '🍬', '🍭', '💘', '✨', '💛', '🌸'];
+            for (let i = 0; i < 24; i++) {
+                const char = icons[Math.floor(Math.random() * icons.length)];
+                particles.push(new Particle(x, y, true, char));
+            }
+        }
+
+        // 3. 하트 카드 뒤집기 및 모달 활성화
+        const confessionDetails = {
+            1: "🔮 6개의 행운 번호와 함께하는 로또 번호 생성기! 뒷면의 바로가기 버튼을 눌러 인생역전의 기회를 확인해 보세요.",
+            2: "🌸 너를 처음 본 순간부터 내 마음에 봄바람이 불었어. 네 미소 한 번에 세상을 다 얻은 것 같아. 내 진심을 담아 너에게 평생의 고백을 전해.",
+            3: "💕 내 안에 있는 모든 사랑의 조각들을 모으면 바로 '너'라는 존재가 돼. 아끼지 않고 아낌없이 내 모든 사랑을 오직 너에게만 줄게.",
+            4: "🎁 언제나 네 옆에서 가장 든든한 바람막이가 되고, 네가 슬플 때나 기쁠 때나 늘 웃게 해 줄게. 세상에서 너를 가장 행복한 사람으로 만들게!",
+            5: "⏰ 아무런 글씨가 적혀있지 않아도, 언제나 마음속 깊은 곳에서는 너에 대한 사랑으로 가득 채워져 있어.",
+            6: "💘 I LOVE YOU! 하늘만큼 땅만큼, 우주가 다 닳아 없어질 때까지 오직 너만을 사랑해. 세상에서 내 눈에 가장 빛나는 보석, 내 고백을 기쁘게 받아줘!"
+        };
+
+        let flippedCount = 0;
+        const totalHearts = 6;
+        const flippedState = {};
+
+        function flipHeart(element, id) {
+            const rect = element.getBoundingClientRect();
+            const clickX = rect.left + rect.width / 2;
+            const clickY = rect.top + rect.height / 2;
+
+            // 하트 폭죽 터뜨리기
+            explodeHearts(clickX, clickY);
+
+            // 오르골 연주 중이 아닐 때 클릭 효과음(단음) 잠깐 재생
+            playConfessionChime(id);
+
+            // 뒤집기 토글
+            if (!element.classList.contains('flipped')) {
+                element.classList.add('flipped');
+                flippedState[id] = true;
+                
+                // 모든 하트가 다 뒤집혔는지 체크
+                checkAllFlipped();
+            } else {
+                element.classList.remove('flipped');
+                flippedState[id] = false;
+            }
+        }
+
+        function checkAllFlipped() {
+            const activeFlips = Object.values(flippedState).filter(val => val === true).length;
+            if (activeFlips === totalHearts) {
+                // 1초 뒤에 최종 감동 고백 모달 출력
+                setTimeout(() => {
+                    openFinalModal();
+                }, 1000);
+            }
+        }
+
+        function openFinalModal() {
+            // 모든 사랑의 고백이 다 채워졌을 때의 최종 메시지
+            const text = "💖 축하해요! 6개의 사랑의 메신저 하트를 모두 열었습니다. 💖\n\n\"오늘 화이트데이를 맞이하여, 사탕보다 백만 배 달콤한 고백을 가득 안겨드립니다. 당신과 함께 걷는 매 순간순간이 저에게는 가장 달콤한 선물입니다. 영원히 당신만을 사랑합니다!\"";
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('finalModal').classList.add('active');
+            
+            // 모달 열릴 때 대형 폭죽 효과 연쇄 발사
+            for(let i=0; i<5; i++) {
+                setTimeout(() => {
+                    explodeHearts(
+                        window.innerWidth * 0.2 + Math.random() * (window.innerWidth * 0.6),
+                        window.innerHeight * 0.3 + Math.random() * (window.innerHeight * 0.4)
+                    );
+                    playChord(); // 축하 화음 코드 재생
+                }, i * 350);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('finalModal').classList.remove('active');
+            // 하트 전체 리셋
+            const cards = document.querySelectorAll('.heart-item-wrap');
+            cards.forEach(card => card.classList.remove('flipped'));
+            for(let key in flippedState) {
+                flippedState[key] = false;
+            }
+        }
+
+        // 4. Web Audio API 기반 오르골(Music Box) 신디사이저 구현
+        // 저용량 단일 파일에 어떠한 외부 오디오 에셋도 의존하지 않고, 브라우저 엔진으로 실시간 맑고 고운 오르골 사운드를 합성합니다.
+        let audioCtx = null;
+        let isPlaying = false;
+        let melodyTimeout = null;
+        let noteIndex = 0;
+
+        // "Love Me Tender / 캐논 변주곡 감성"의 맑고 영롱한 오르골 멜로디 데이터
+        // [음높이(주파수), 박자(밀리초)]
+        // C4=261.63, D4=293.66, E4=329.63, F4=349.23, G4=392.00, A4=440.00, B4=493.88, C5=523.25, D5=587.33, E5=659.25, F5=698.46, G5=783.99
+        const melody = [
+            [329.63, 600], // E4 (Love...)
+            [392.00, 600], // G4 (me...)
+            [440.00, 600], // A4 (ten...)
+            [392.00, 600], // G4 (der...)
+            [523.25, 600], // C5 (love...)
+            [493.88, 600], // B4 (me...)
+            [440.00, 1200], // A4 (sweet...)
+            
+            [349.23, 600], // F4 (ne...)
+            [392.00, 600], // G4 (ver...)
+            [440.00, 600], // A4 (let...)
+            [392.00, 600], // G4 (me...)
+            [349.23, 600], // F4 (go...)
+            [329.63, 600], // E4 (my...)
+            [293.66, 1200], // D4 (love...)
+
+            [329.63, 600], // E4 (For...)
+            [392.00, 600], // G4 (you...)
+            [440.00, 600], // A4 (have...)
+            [392.00, 600], // G4 (made...)
+            [523.25, 600], // C5 (my...)
+            [493.88, 600], // B4 (life...)
+            [440.00, 1200], // A4 (com...)
+            
+            [523.25, 600], // C5 (plete...)
+            [493.88, 600], // B4 (and...)
+            [440.00, 600], // A4 (I...)
+            [392.00, 600], // G4 (love...)
+            [349.23, 600], // F4 (you...)
+            [293.66, 600], // D4 (so...)
+            [261.63, 1200]  // C4 (forever)
+        ];
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // 맑고 청아한 오르골 소리를 합성하는 신디사이저 보이스 함수
+        function playMusicBoxNote(frequency, duration) {
+            if (!audioCtx) return;
+
+            // 1. Oscillator (소리 생성기)
+            const osc = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator(); // 배음 효과용
+            
+            // 2. GainNode (볼륨 엔벨로프 - 오르골 특유의 팅기는 어택과 긴 릴리즈)
+            const gainNode = audioCtx.createGain();
+            
+            // 3. DelayNode (맑게 울려 퍼지는 에코/공간감 재현)
+            const delay = audioCtx.createDelay();
+            const feedback = audioCtx.createGain();
+
+            osc.type = 'sine'; // 맑은 톤을 위해 Sine 파형 사용
+            osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+
+            // 배음을 한 옥타브 높게 섞어 오르골 특유의 쇠구슬 소리 구현
+            osc2.type = 'triangle'; 
+            osc2.frequency.setValueAtTime(frequency * 2, audioCtx.currentTime);
+
+            delay.delayTime.setValueAtTime(0.25, audioCtx.currentTime);
+            feedback.gain.setValueAtTime(0.4, audioCtx.currentTime); // 반향 피드백 40%
+
+            // 볼륨 엔벨로프 설정 (Ting~ 하고 서서히 감쇠)
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.25, audioCtx.currentTime + 0.01); // 초고속 어택
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration/1000 + 0.6); // 긴 감쇠
+
+            // 커넥션 체인 구성
+            osc.connect(gainNode);
+            osc2.connect(gainNode);
+            
+            // 딜레이/리버브 효과 노드 연결
+            gainNode.connect(audioCtx.destination);
+            gainNode.connect(delay);
+            delay.connect(feedback);
+            feedback.connect(delay);
+            delay.connect(audioCtx.destination);
+
+            osc.start();
+            osc2.start();
+            
+            // 음이 끝나면 자원 수거
+            osc.stop(audioCtx.currentTime + duration/1000 + 0.8);
+            osc2.stop(audioCtx.currentTime + duration/1000 + 0.8);
+        }
+
+        // 루프하며 멜로디 재생
+        function playMelodyLoop() {
+            if (!isPlaying) return;
+
+            const note = melody[noteIndex];
+            playMusicBoxNote(note[0], note[1]);
+
+            noteIndex = (noteIndex + 1) % melody.length;
+            
+            // 박자 간격 설정
+            melodyTimeout = setTimeout(playMelodyLoop, note[1]);
+        }
+
+        // 오르골 재생 토글
+        function toggleMusic() {
+            initAudio();
+            
+            const btn = document.getElementById('musicBtn');
+            const icon = document.getElementById('musicIcon');
+            const text = document.getElementById('musicText');
+
+            if (isPlaying) {
+                // 중지
+                isPlaying = false;
+                clearTimeout(melodyTimeout);
+                btn.classList.remove('playing');
+                icon.innerText = '🎵';
+                text.innerText = '오르골 멜로디 켜기';
+            } else {
+                // 시작
+                isPlaying = true;
+                btn.classList.add('playing');
+                icon.innerText = '🎁';
+                text.innerText = '멜로디 연주 중...';
+                noteIndex = 0;
+                
+                // 브라우저 오디오 보안 정책 상 유저 인터랙션 후 즉시 오디오 맥락 재개 필수
+                if(audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                playMelodyLoop();
+            }
+        }
+
+        // 고백 하트를 터치/클릭할 때 나는 영롱한 미니 실로폰 사운드
+        function playConfessionChime(id) {
+            if (!audioCtx) return;
+            // 6개 하트에 대응하는 6가지 화음 노트들
+            const scale = [392.00, 440.00, 523.25, 587.33, 659.25, 783.99]; // G4, A4, C5, D5, E5, G5 (펜타토닉 풍의 조화로운 구성)
+            const freq = scale[(id - 1) % scale.length];
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 0.005);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+        }
+
+        // 모달 축하용 풍성한 C Major 7 화음 코드 재생
+        function playChord() {
+            if (!audioCtx) return;
+            const notes = [261.63, 329.63, 392.00, 523.25, 659.25]; // C4, E4, G4, C5, E5
+            notes.forEach(freq => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 2, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1.8);
+            });
+        }
+    </script>
+</body>
+</html>
